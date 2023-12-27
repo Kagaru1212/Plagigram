@@ -7,8 +7,13 @@ html, body {
     color: #444;
 }
 
+.post-image {
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+}
 a {
-    color: #0059b2;
+    color: #3F4137;
     text-decoration: none;
 }
 
@@ -32,12 +37,14 @@ p.link-read-post a {
 
 ul.list-articles {
     list-style: none;
-    margin: 0;
+    margin: 40px 0 0 425px;
     padding: 0;
+    border-bottom: none;
 }
 
 ul.list-articles li {
     border-bottom: 1px solid #ccc;
+    border-bottom: none;
 }
 
 .table-page {

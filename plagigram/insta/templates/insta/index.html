@@ -2,11 +2,18 @@
 
 {% block content %}
 <ul class="list-articles">
-	{% for p in posts %}
-			<li><h2>{{p.title}}</h2>
-    {% autoescape off %}
-	{{p.content|linebreaks|truncatewords:40}}
-    {% endautoescape %}
-	{% endfor %}
+    {% for p in posts %}
+        <li>
+            <a href="#"><h2>{{ p.user }}</h2></a>
+            {% for img in p.uploadimage_set.all %}
+                <img class="post-image" src="{{ img.image.url }}" alt="Post Image">
+            {% endfor %}
+            <h3>{{ p.title }}</h3>
+
+            {% autoescape off %}
+                {{ p.text|linebreaks }}
+            {% endautoescape %}
+        </li>
+    {% endfor %}
 </ul>
 {% endblock %}
