@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from insta.forms import AddPostForm, PostUploadImageFormSet
-from insta.models import Post
+from insta.forms import UploadImageForm, AddPostForm, PostUploadImageFormSet
+from insta.models import UploadImage, Post
 
 
+@login_required
 def index(request):
     posts = Post.objects.all()
     data = {
@@ -13,6 +15,7 @@ def index(request):
     return render(request, 'insta/index.html', context=data)
 
 
+@login_required
 def add_post(request):
     if request.method == 'POST':
         post_form = AddPostForm(request.POST)
