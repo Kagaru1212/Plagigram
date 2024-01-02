@@ -1,23 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{user.username}} | <a href="{% url 'users:logout' %}">Выйти</a></h1>
+<h1 class="profile">{{user.username}} | <a href="{% url 'users:logout' %}">Выйти</a></h1>
 
-<form method="post" enctype="multipart/form-data">
+
+<form class="profile" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% if user.avatar %}
-    <p><img class="avatar" src="{{ user.avatar.url }}">
-    {% else %}
-    <p><img class="avatar" src="{{ default_image }}">
-    {% endif %}
 
     <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
-    <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
+
+    <div class="flex-container">
+        <div class="avatar-container">
+            {% if user.avatar %}
+                <img class="avatar" src="{{ user.avatar.url }}">
+            {% else %}
+                <img class="avatar" src="{{ default_image }}">
+            {% endif %}
+        </div>
+
+        <div class="biography-container">
+            {% for f in form %}
+                {% if f.name == 'biography' %}
+                    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                    <div class="form-error">{{ f.errors }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <p><label class="form-label" for="{{ form.avatar.id_for_label }}"></label>{{ form.avatar }}</p>
+    <div class="form-error">{{ form.avatar.errors }}</div>
 
     <p><button type="submit">Сохранить</button></p>
 </form>
+
+<h2 class="center-block-profile">You posts</h2>
+<div class="you-posts-profile">
+        {% for post in user.post_set.all %}
+            {% for img in post.uploadimage_set.all %}
+                <a href="#"><img class="you-post" src="{{ img.image.url }}" alt="Post Image"></a>
+            {% endfor %}
+        {% endfor %}
+</div>
+
 
 {% endblock %}
