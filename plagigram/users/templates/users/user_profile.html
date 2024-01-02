@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="profile">{{ profile_user.username }}</h1>
+
+<div class="user-profile">
+    <div class="avatar-container">
+        {% if profile_user.avatar %}
+            <img class="avatar" src="{{ profile_user.avatar.url }}">
+        {% else %}
+            <img class="avatar" src="{{ default_image }}">
+        {% endif %}
+    </div>
+
+    <div class="biography-container">
+        <p class="author-title">Biography:</p>
+        <p class="author-bio">{{ profile_user.biography }}</p>
+    </div>
+</div>
+{% if is_owner %}
+    <p class="user-profile" ><a href="{% url 'users:profile' %}">Редактировать</a></p>
+{% endif %}
+
+<h2 class="center-block-profile">Posts by {{ profile_user.username }}</h2>
+<div class="you-posts-profile">
+    {% for post in profile_user.post_set.all %}
+        {% for img in post.uploadimage_set.all %}
+            <a href="#"><img class="you-post" src="{{ img.image.url }}" alt="Post Image"></a>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{% endblock %}
