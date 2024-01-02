@@ -156,3 +156,9 @@ ul.list-articles li {
     padding: 0;
     color: #CC0000;
 }
+
+.avatar {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
