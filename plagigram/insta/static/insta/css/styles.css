@@ -105,7 +105,6 @@ ul.list-articles li {
     color: #CC0000;
 }
 
-
 .table-content {
     width: 100%;
     min-height: 100%;
@@ -133,4 +132,27 @@ ul.list-articles li {
 #footer a {
     text-decoration: underline;
     color: #aaa;
+}
+
+.form-input {
+    width: 300px;
+    font-size: 16px;
+}
+
+.form-label-register {
+    display: inline-block;
+    min-width: 200px;
+    vertical-align: top;
+}
+
+.form-label-login {
+    display: inline-block;
+    min-width: 100px;
+    vertical-align: top;
+}
+
+.form-error ul {
+    list-style: none;
+    padding: 0;
+    color: #CC0000;
 }
