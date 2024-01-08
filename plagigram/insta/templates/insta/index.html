@@ -5,15 +5,19 @@
     {% for p in posts %}
         <li>
             <a href="{% url 'users:user_profile' username=p.user.username %}"><h2>{{ p.user }}</h2></a>
+
             {% for img in p.uploadimage_set.all %}
                 <img class="post-image" src="{{ img.image.url }}" alt="Post Image">
             {% endfor %}
+
             <h3>{{ p.title }}</h3>
 
             {% autoescape off %}
                 {{ p.text|linebreaks }}
             {% endautoescape %}
+
         </li>
+        <a href="{% url 'comments' post_id=p.id %}"><h3>Comments</h3></a>
     {% endfor %}
 </ul>
 {% endblock %}
