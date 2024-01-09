@@ -4,7 +4,7 @@
 <ul class="list-articles">
     {% for p in posts %}
         <li>
-            <a href="#"><h2>{{ p.user }}</h2></a>
+            <a href="{% url 'users:user_profile' username=p.user.username %}"><h2>{{ p.user }}</h2></a>
             {% for img in p.uploadimage_set.all %}
                 <img class="post-image" src="{{ img.image.url }}" alt="Post Image">
             {% endfor %}
