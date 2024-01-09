@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from insta.forms import UploadImageForm, AddPostForm, PostUploadImageFormSet, CommentForm
-from insta.models import UploadImage, Post, Comment
+from insta.models import UploadImage, Post, Comment, Like
 from plagigram import settings
 
 
@@ -66,3 +66,18 @@ def add_comment(request, post_id):
                 comment.save()
 
     return redirect('comments', post_id=post_id)
+
+
+@login_required
+def like_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    user = request.user
+
+    existing_like = Like.objects.filter(user=user, post=post).first()
+
+    if existing_like:
+        existing_like.delete()
+    else:
+        Like.objects.create(user=user, post=post)
+
+    return redirect('home')
