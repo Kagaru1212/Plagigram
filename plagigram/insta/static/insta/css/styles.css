@@ -12,6 +12,7 @@ html, body {
     max-width: 460px;
     height: auto;
 }
+
 a {
     color: #3F4137;
     text-decoration: none;
@@ -155,4 +156,51 @@ ul.list-articles li {
     list-style: none;
     padding: 0;
     color: #CC0000;
+}
+
+.avatar {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.you-post {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+.center-block-profile {
+    margin: 70px auto;
+    text-align: center;
+}
+
+.you-posts-profile {
+    width: 60%;
+    margin: 40px 0 0 300px;
+    text-align: center;
+}
+
+.profile {
+    list-style: none;
+    margin: 40px 0 0 400px;
+    padding: 0;
+    border-bottom: none;
+}
+.flex-container {
+    display: flex;
+}
+
+.avatar-container {
+    margin-right: 20px;
+}
+
+.user-profile {
+    list-style: none;
+    margin: 40px 0 0 400px;
+    padding: 0;
+    border-bottom: none;
+    display: flex;
 }

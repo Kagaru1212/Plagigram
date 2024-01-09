@@ -152,3 +152,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'users.authentication.EmailAuthBackend',
 ]
+
+DEFAULT_USER_IMAGE = MEDIA_URL + 'users/default.png'
+
