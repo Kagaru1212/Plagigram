@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="post-details">
+    <div class="post-image-comment">
+        {% for img in post.uploadimage_set.all %}
+            <img class="post-image-comment" src="{{ img.image.url }}" alt="Post Image">
+        {% endfor %}
+    </div>
+    <div class="comments-section">
+        <h2>Comments on this post</h2>
+        <div class="comments-container">
+            <div class="comment-list">
+                {% for comment in comments %}
+                    <div class="comment-container">
+                        <div class="avatar-container">
+                            {% if comment.user.avatar %}
+                                <img class="comment-avatar" src="{{ comment.user.avatar.url }}">
+                            {% else %}
+                                <img class="comment-avatar" src="{{ default_image }}">
+                            {% endif %}
+                        </div>
+                        <div class="comment-content">
+                            <a href="{% url 'users:user_profile' username=comment.user.username %}"><strong>{{ comment.user.username }}</strong></a>: {{ comment.text | linebreaksbr }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <form method="post" action="{% url 'add_comment' post_id=post.id %}">
+            {% csrf_token %}
+            <div>
+                <label for="{{ form.text.id_for_label }}">Прокомментировать:</label>
+                {{ form.text }}
+            </div>
+            <div>
+                <button type="submit" class="comment-button">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

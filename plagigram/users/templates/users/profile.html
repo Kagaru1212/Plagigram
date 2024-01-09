@@ -36,11 +36,15 @@
 
 <h2 class="center-block-profile">You posts</h2>
 <div class="you-posts-profile">
-        {% for post in user.post_set.all %}
-            {% for img in post.uploadimage_set.all %}
-                <a href="#"><img class="you-post" src="{{ img.image.url }}" alt="Post Image"></a>
-            {% endfor %}
-        {% endfor %}
+    {% for post in user.post_set.all %}
+        {% with img=post.uploadimage_set.first %}
+            {% if img %}
+                <a href="{% url 'comments' post_id=post.id %}">
+                    <img class="you-post" src="{{ img.image.url }}" alt="Post Image">
+                </a>
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
 </div>
 
 
