@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from insta.forms import UploadImageForm, AddPostForm, PostUploadImageFormSet, CommentForm
-from insta.models import UploadImage, Post, Comment, Like
+from insta.models import UploadImage, Post, Comment, Like, TagPost
 from plagigram import settings
 
 
@@ -23,7 +23,12 @@ def add_post(request):
         image_formset = PostUploadImageFormSet(request.POST, request.FILES, instance=Post())
 
         if post_form.is_valid() and image_formset.is_valid():
-            post = post_form.save()
+            post = post_form.save(commit=False)
+            post.user = request.user
+            post.save()
+
+            post.tags.set(post_form.cleaned_data['tags'])
+
             image_formset.instance = post
             image_formset.save()
 
@@ -32,10 +37,13 @@ def add_post(request):
         post_form = AddPostForm()
         image_formset = PostUploadImageFormSet(instance=Post())
 
+    tag_list = TagPost.objects.all()
+
     data = {
         'title': 'Add post',
         'form': post_form,
-        'image_formset': image_formset
+        'image_formset': image_formset,
+        'tag_list': tag_list,
     }
     return render(request, 'insta/addpost.html', data)
 
@@ -81,3 +89,11 @@ def like_post(request, post_id):
         Like.objects.create(user=user, post=post)
 
     return redirect('home')
+
+
+def posts_by_tag(request, tag):
+    tag = get_object_or_404(TagPost, tag=tag)
+    posts = Post.objects.filter(tags=tag)
+
+    return render(request, 'insta/index.html', {'tag': tag, 'posts': posts, 'title': f"Posts by {tag}"})
+

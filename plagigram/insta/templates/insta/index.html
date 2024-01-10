@@ -25,6 +25,12 @@
                 </a>
             </div>
             <p>Likes: {{ p.like_set.count }} | Comments: {{ p.comment_set.count }}</p>
+            <div class="post-tags">
+                    Tags:
+                    {% for tag in p.tags.all %}
+                        <a href="{{ tag.get_absolute_url }}" class="tag">{{ tag.tag }}</a>
+                    {% endfor %}
+            </div>
 
             <h3>{{ p.title }}</h3>
 
