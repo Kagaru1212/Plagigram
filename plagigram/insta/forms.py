@@ -10,11 +10,6 @@ class AddPostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'text', 'tags']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if 'user' in self.fields:
-            del self.fields['user']
-
 
 class UploadImageForm(forms.ModelForm):
     class Meta:
