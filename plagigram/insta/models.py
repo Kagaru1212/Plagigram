@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 from users.models import User
 
@@ -16,8 +17,13 @@ class Post(models.Model):
 class TagPost(models.Model):
     tag = models.CharField(max_length=100, db_index=True)
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.tag
+
+    def get_absolute_url(self):
+        return reverse('posts_by_tag', args=[str(self.tag)])
 
 
 class UploadImage(models.Model):

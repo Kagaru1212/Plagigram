@@ -1,12 +1,14 @@
 from django import forms
 from django.forms.models import inlineformset_factory
-from .models import Post, UploadImage, Comment
+from .models import Post, UploadImage, Comment, TagPost
 
 
 class AddPostForm(forms.ModelForm):
+    tags = forms.ModelMultipleChoiceField(queryset=TagPost.objects.all(), widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = Post
-        fields = ['title', 'text', 'user', 'tags']
+        fields = ['title', 'text', 'tags']
 
 
 class UploadImageForm(forms.ModelForm):
