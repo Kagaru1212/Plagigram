@@ -4,8 +4,8 @@ services:
       context: .
     env_file:
       - .env
-    expose:
-      - 8000
+    ports:
+      - "8000:8000"
     environment:
       - PYTHONPATH=/app/plagigram
     command: >
@@ -25,12 +25,6 @@ services:
     volumes:
       - my_db:$PGDATA
 
-  nginx:
-    build: ./nginx
-    ports:
-      - "1337:80"
-    depends_on:
-      - django
-
 volumes:
   my_db:
+
