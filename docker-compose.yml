@@ -6,11 +6,13 @@ services:
       - .env
     ports:
       - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/plagigram
     command: >
       bash -c "python plagigram/insta/wait_db.py &&
                python plagigram/manage.py makemigrations &&
                python plagigram/manage.py migrate &&
-               python plagigram/manage.py runserver 0.0.0.0:8000"
+               gunicorn plagigram.wsgi:application --bind localhost:8000"
     depends_on:
        - pgdb
 
@@ -22,6 +24,13 @@ services:
       - "5432:5432"
     volumes:
       - my_db:$PGDATA
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "1337:80"
+    depends_on:
+      - django
 
 volumes:
   my_db:
