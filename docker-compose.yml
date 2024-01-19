@@ -12,7 +12,7 @@ services:
       bash -c "python plagigram/insta/wait_db.py &&
                python plagigram/manage.py makemigrations &&
                python plagigram/manage.py migrate &&
-               gunicorn plagigram.wsgi:application --bind localhost:8000"
+               gunicorn plagigram.wsgi:application --bind 0.0.0.0:8000"
     depends_on:
        - pgdb
 
