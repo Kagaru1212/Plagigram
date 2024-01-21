@@ -1,36 +1,26 @@
 services:
   django:
-    build:
-      context: .
+    build: ./app
     env_file:
-      - .env
-    expose:
-      - 8000
-    environment:
-      - PYTHONPATH=/app/plagigram
+      - .env.dev
     command: >
-      bash -c "python plagigram/insta/wait_db.py &&
-               python plagigram/manage.py makemigrations &&
-               python plagigram/manage.py migrate &&
-               gunicorn plagigram.wsgi:application --bind 0.0.0.0:8000"
+      bash -c "python manage.py makemigrations &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+
+    ports:
+      - 8000:8000
     depends_on:
        - pgdb
 
   pgdb:
     image: postgres:latest
     env_file:
-      - .env
+      - .env.dev
     ports:
       - "5432:5432"
     volumes:
-      - my_db:$PGDATA
-
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - django
+      - my_db:/var/lib/postgresql/data
 
 volumes:
   my_db:
