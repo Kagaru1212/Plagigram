@@ -25,7 +25,7 @@ ENV APP_HOME=/home/app/web
 RUN mkdir $HOME
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/staticfiles
-RUN mkdir $APP_HOME/mediafiles
+RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
 # copy project

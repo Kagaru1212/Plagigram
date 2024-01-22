@@ -55,8 +55,7 @@ def post_comments(request, post_id):
     form = CommentForm()
 
     return render(request, 'insta/comments.html', {'post': post,
-                                                   'comments': comments, 'form': form, 'title': 'Post',
-                                                   'default_image': settings.DEFAULT_USER_IMAGE})
+                                                   'comments': comments, 'form': form, 'title': 'Post'})
 
 
 @login_required

@@ -12,7 +12,7 @@ services:
       - 8000
     volumes:
       - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
+      - media_volume:/home/app/web/media
     depends_on:
        - pgdb
     networks:
@@ -33,7 +33,7 @@ services:
     build: ./nginx
     volumes:
       - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
+      - media_volume:/home/app/web/media
     ports:
       - "80:80"
     depends_on:

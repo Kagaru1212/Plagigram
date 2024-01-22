@@ -29,7 +29,6 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
     template_name = 'users/profile.html'
     extra_context = {
         'title': "Профиль пользователя",
-        'default_image': settings.DEFAULT_USER_IMAGE,
     }
 
     def get_success_url(self):
@@ -46,5 +45,4 @@ def user_profile(request, username):
     is_owner = request.user == profile_user
 
     return render(request, 'users/user_profile.html',
-                  {'profile_user': profile_user, 'is_owner': is_owner,
-                   'default_image': settings.DEFAULT_USER_IMAGE, 'title': "Профиль пользователя"})
+                  {'profile_user': profile_user, 'is_owner': is_owner,'title': "Профиль пользователя"})
