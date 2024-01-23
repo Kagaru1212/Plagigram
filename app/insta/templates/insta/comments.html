@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="post-details">
@@ -17,7 +18,7 @@
                             {% if comment.user.avatar %}
                                 <img class="comment-avatar" src="{{ comment.user.avatar.url }}">
                             {% else %}
-                                <img class="comment-avatar" src="{{ default_image }}">
+                                <img class="avatar" src="{% static 'users/images/default.png' %}">
                             {% endif %}
                         </div>
                         <div class="comment-content">
