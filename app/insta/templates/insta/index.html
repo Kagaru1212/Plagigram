@@ -9,7 +9,8 @@
             </a>
 
             {% for img in p.uploadimage_set.all %}
-                <img class="post-image" src="{{ img.image.url }}" alt="Post Image">
+                {% load cloudinary %}
+                {% cloudinary img.image quality='auto' width=200 height=200 crop='pad' background='gen_fill:ignore-foreground_true' %}
             {% endfor %}
 
             <div class="post-details">

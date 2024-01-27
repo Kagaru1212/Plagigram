@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+from cloudinary.models import CloudinaryField
 
 from users.models import User
 
@@ -27,7 +28,7 @@ class TagPost(models.Model):
 
 
 class UploadImage(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = CloudinaryField('images')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None, null=True, blank=True)
 
 
