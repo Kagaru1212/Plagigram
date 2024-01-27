@@ -19,14 +19,22 @@
             {% endif %}
         </div>
 
-        <div class="biography-container">
-            {% for f in form %}
-                {% if f.name == 'biography' %}
-                    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
-                    <div class="form-error">{{ f.errors }}</div>
-                {% endif %}
-            {% endfor %}
+        <div class="profile-followers">
+            <a href="#">{{ user.subscriptions.count }} подписчиков</a>
         </div>
+
+        <div class="profile-following">
+            <a href="#">{{ user.subscribers.count }} подписок</a>
+        </div>
+    </div>
+
+    <div class="biography-container">
+        {% for f in form %}
+            {% if f.name == 'biography' %}
+                <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                    <div class="form-error">{{ f.errors }}</div>
+            {% endif %}
+        {% endfor %}
     </div>
 
     <p><label class="form-label" for="{{ form.avatar.id_for_label }}"></label>{{ form.avatar }}</p>
@@ -50,3 +58,4 @@
 
 
 {% endblock %}
+

@@ -2,12 +2,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
 from plagigram import settings
 from users.forms import LoginUserForm, RegisterUserForm, ProfileUserForm
+from users.models import User, Subscription
 
 
 class LoginUser(LoginView):
@@ -41,8 +42,44 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
 @login_required
 def user_profile(request, username):
     profile_user = get_object_or_404(get_user_model(), username=username)
-
     is_owner = request.user == profile_user
 
-    return render(request, 'users/user_profile.html',
-                  {'profile_user': profile_user, 'is_owner': is_owner,'title': "Профиль пользователя"})
+    is_following = Subscription.objects.filter(follower=request.user, followee=profile_user).exists()
+
+    num_followers = profile_user.subscribers.count()
+    num_following = profile_user.subscriptions.count()
+
+    context = {
+        'profile_user': profile_user,
+        'is_owner': is_owner,
+        'is_following': is_following,
+        'num_followers': num_followers,
+        'num_following': num_following,
+        'title': "Профиль пользователя",
+    }
+
+    return render(request, 'users/user_profile.html', context)
+
+
+@login_required
+def subscribe(request, username):
+    user_to_subscribe = get_object_or_404(User, username=username)
+
+    # Проверяем, существует ли уже подписка
+    if not Subscription.objects.filter(follower=request.user, followee=user_to_subscribe).exists():
+        Subscription.objects.create(follower=request.user, followee=user_to_subscribe)
+
+    return redirect('users:user_profile', username=username)
+
+
+@login_required
+def unsubscribe(request, username):
+    user_to_unsubscribe = get_object_or_404(User, username=username)
+
+    # Проверяем, существует ли подписка перед удалением
+    subscription = Subscription.objects.filter(follower=request.user, followee=user_to_unsubscribe).first()
+    if subscription:
+        subscription.delete()
+
+    return redirect('users:user_profile', username=username)
+
