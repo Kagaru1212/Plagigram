@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
-    'insta.apps.InstaConfig'
+    'insta.apps.InstaConfig',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,12 @@ AUTHENTICATION_BACKENDS = [
 
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost"]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+
