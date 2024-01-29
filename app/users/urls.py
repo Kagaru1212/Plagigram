@@ -10,4 +10,7 @@ urlpatterns = [
     path('register/', views.RegisterUser.as_view(), name='register'),
     path('profile/', views.ProfileUser.as_view(), name='profile'),
     path('profile/<str:username>/', views.user_profile, name='user_profile'),
+    path('subscribe/<str:username>/', views.subscribe, name='subscribe'),
+    path('unsubscribe/<str:username>/', views.unsubscribe, name='unsubscribe'),
+
 ]

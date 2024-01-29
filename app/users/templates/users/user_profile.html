@@ -2,14 +2,50 @@
 {% load static %}
 
 {% block content %}
-<h1 class="profile">{{ profile_user.username }}</h1>
+<h1 class="profile">{{ profile_user.username }}
+    {% if not is_owner %}
+        <div class="subscribe-button">
+            {% if is_following %}
+                <form method="post" action="{% url 'users:unsubscribe' profile_user.username %}">
+                    {% csrf_token %}
+                        <button type="submit">Отписаться</button>
+                </form>
+                    {% else %}
+                <form method="post" action="{% url 'users:subscribe' profile_user.username %}">
+                    {% csrf_token %}
+                        <button type="submit">Подписаться</button>
+                </form>
+                    {% endif %}
+        </div>
+    {% endif %}
+</h1>
 
-<div class="user-profile">
-    <div class="avatar-container">
-        {% if profile_user.avatar %}
-            <img class="avatar" src="{{ profile_user.avatar.url }}">
+<div class="profile">
+    <div class="flex-container">
+        <div class="avatar-container">
+            {% if profile_user.avatar %}
+                <img class="avatar" src="{{ profile_user.avatar.url }}">
+            {% else %}
+                <img class="avatar" src="{% static 'users/images/default.png' %}">
+            {% endif %}
+        </div>
+
+        {% if is_owner %}
+        <div class="profile-followers">
+            <a href="#">{{ user.subscriptions.count }} подписчиков</a>
+        </div>
+
+        <div class="profile-following">
+            <a href="#">{{ user.subscribers.count }} подписок</a>
+        </div>
         {% else %}
-            <img class="avatar" src="{% static 'users/images/default.png' %}">
+        <div class="profile-followers">
+            <a href="#">{{ num_following }} подписчиков</a>
+        </div>
+
+        <div class="profile-following">
+            <a href="#">{{ num_followers }} подписок</a>
+        </div>
         {% endif %}
     </div>
 
