@@ -1,9 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from insta.forms import UploadImageForm, AddPostForm, PostUploadImageFormSet, CommentForm
-from insta.models import UploadImage, Post, Comment, Like, TagPost
-from plagigram import settings
+from insta.forms import AddPostForm, CommentForm, PostUploadMediaFormSet
+from insta.models import Post, Comment, Like, TagPost, UploadImage
 
 
 @login_required
@@ -20,29 +19,32 @@ def index(request):
 def add_post(request):
     if request.method == 'POST':
         post_form = AddPostForm(request.POST)
-        image_formset = PostUploadImageFormSet(request.POST, request.FILES, instance=Post())
+        media_formset = PostUploadMediaFormSet(request.POST, request.FILES, queryset=UploadImage.objects.none())
 
-        if post_form.is_valid() and image_formset.is_valid():
+        if post_form.is_valid() and media_formset.is_valid():
             post = post_form.save(commit=False)
             post.user = request.user
             post.save()
 
             post.tags.set(post_form.cleaned_data['tags'])
 
-            image_formset.instance = post
-            image_formset.save()
+            for media_form in media_formset:
+                if media_form.is_valid():
+                    media = media_form.save(commit=False)
+                    media.post = post
+                    media.save()
 
             return redirect('home')
     else:
         post_form = AddPostForm()
-        image_formset = PostUploadImageFormSet(instance=Post())
+        media_formset = PostUploadMediaFormSet(queryset=UploadImage.objects.none())
 
     tag_list = TagPost.objects.all()
 
     data = {
         'title': 'Add post',
         'form': post_form,
-        'image_formset': image_formset,
+        'media_formset': media_formset,
         'tag_list': tag_list,
     }
     return render(request, 'insta/addpost.html', data)

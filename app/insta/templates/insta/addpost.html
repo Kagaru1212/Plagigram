@@ -12,9 +12,12 @@
         {% endif %}
     {% endfor %}
 
-    {{ image_formset.management_form }}
-    {% for form in image_formset %}
-      {{ form.image.label_tag }} {{ form.image }}
+    {{ media_formset.management_form }}
+    {% for form in media_formset %}
+        <p>
+            {{ form.video_file.label_tag }} {{ form.video_file }}
+            {{ form.image.label_tag }} {{ form.image }}
+        </p>
     {% endfor %}
 
     <p>

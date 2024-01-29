@@ -28,8 +28,11 @@ class TagPost(models.Model):
 
 
 class UploadImage(models.Model):
-    image = CloudinaryField('images')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    image = CloudinaryField('images')
+    video_file = CloudinaryField(resource_type='video')
+
+    objects = models.Manager()
 
 
 class Comment(models.Model):

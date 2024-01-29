@@ -8,10 +8,20 @@
                 <h2>{{ p.user }}</h2>
             </a>
 
-            {% for img in p.uploadimage_set.all %}
+            {% for media_file in p.uploadimage_set.all %}
                 {% load cloudinary %}
-                {% cloudinary img.image quality='auto' width=200 height=200 crop='pad' background='gen_fill:ignore-foreground_true' %}
+                {% if media_file.image %}
+                    {# if image #}
+                    {% cloudinary media_file.image quality='auto' width=460 height=460 crop='pad' background='gen_fill:ignore-foreground_true' %}
+                {% elif media_file.video_file %}
+                    {# if video #}
+                    <video width="460" height="380" controls>
+                        <source src="{{ media_file.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
             {% endfor %}
+
 
             <div class="post-details">
                 <a href="{% url 'like_post' post_id=p.id %}">
