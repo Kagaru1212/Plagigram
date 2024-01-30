@@ -10,17 +10,17 @@
 
             {% for media_file in p.uploadimage_set.all %}
                 {% load cloudinary %}
-                {% if media_file.image %}
-                    {# if image #}
                     {% cloudinary media_file.image quality='auto' width=460 height=460 crop='pad' background='gen_fill:ignore-foreground_true' %}
-                {% elif media_file.video_file %}
-                    {# if video #}
-                    <video width="460" height="380" controls>
-                        <source src="{{ media_file.video_file.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                {% endif %}
             {% endfor %}
+
+            {% for media_file in p.uploadvideo_set.all %}
+                {% load cloudinary %}
+                <video width="460" height="380" controls>
+                    <source src="{{ media_file.video_file }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% endfor %}
+
 
 
             <div class="post-details">

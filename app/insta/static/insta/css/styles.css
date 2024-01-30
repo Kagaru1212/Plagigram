@@ -189,9 +189,31 @@ ul.list-articles li {
     padding: 0;
     border-bottom: none;
 }
+
 .flex-container {
     display: flex;
+    align-items: flex-start;
 }
+
+.biography-container {
+    display: flex;
+    margin-top: 20px;
+    flex-grow: 1;
+}
+
+.biography-container textarea {
+    width: 100%;
+    max-width: 400px;
+    height: 100px;
+    resize: none;
+    margin-right: 20px;
+}
+
+.profile-followers,
+.profile-following {
+    margin-right: 20px;
+}
+
 
 .avatar-container {
     margin-right: 20px;
