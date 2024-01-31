@@ -1,7 +1,9 @@
+from cloudinary.uploader import upload
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from cloudinary.models import CloudinaryField
+from cloudinary.uploader import upload_large
 
 from users.models import User
 
@@ -28,8 +30,13 @@ class TagPost(models.Model):
 
 
 class UploadImage(models.Model):
-    image = CloudinaryField('images')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    image = CloudinaryField('images')
+
+
+class UploadVideo(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    video_file = CloudinaryField(resource_type='video')
 
 
 class Comment(models.Model):

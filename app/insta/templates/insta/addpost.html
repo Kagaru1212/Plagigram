@@ -14,8 +14,15 @@
 
     {{ image_formset.management_form }}
     {% for form in image_formset %}
-      {{ form.image.label_tag }} {{ form.image }}
+        {{ form.image.label_tag }} {{ form.image }}
     {% endfor %}
+
+    {{ video_formset.management_form }}
+    {% for form in video_formset %}
+        {{ form.video_file.label_tag }} {{ form.video_file }}
+    {% endfor %}
+
+
 
     <p>
         <label class="form-label" for="{{ form.tags.id_for_label }}">{{ form.tags.label }}</label>

@@ -32,19 +32,19 @@
 
         {% if is_owner %}
         <div class="profile-followers">
-            <a href="#">{{ user.subscriptions.count }} подписчиков</a>
+            <p>{{ user.subscriptions.count }} подписчиков</p>
         </div>
 
         <div class="profile-following">
-            <a href="#">{{ user.subscribers.count }} подписок</a>
+            <p>{{ user.subscribers.count }} подписок</p>
         </div>
         {% else %}
         <div class="profile-followers">
-            <a href="#">{{ num_following }} подписчиков</a>
+            <p>{{ num_following }} подписчиков</p>
         </div>
 
         <div class="profile-following">
-            <a href="#">{{ num_followers }} подписок</a>
+            <p>{{ num_followers }} подписок</p>
         </div>
         {% endif %}
     </div>
