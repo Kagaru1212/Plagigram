@@ -4,8 +4,17 @@
 {% block content %}
 <div class="post-details">
     <div class="post-image-comment">
-        {% for img in post.uploadimage_set.all %}
-            <img class="post-image-comment" src="{{ img.image.url }}" alt="Post Image">
+        {% for media_file in post.uploadimage_set.all %}
+            {% load cloudinary %}
+            {% cloudinary media_file.image quality='auto' width=930 height=930 crop='pad' background='gen_fill:ignore-foreground_true' %}
+        {% endfor %}
+
+        {% for media_file in post.uploadvideo_set.all %}
+        {% load cloudinary %}
+            <video width="800" height="720" controls>
+                <source src="{{ media_file.video_file }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         {% endfor %}
     </div>
     <div class="comments-section">

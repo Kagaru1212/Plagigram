@@ -212,6 +212,7 @@ ul.list-articles li {
 .profile-followers,
 .profile-following {
     margin-right: 20px;
+    padding: 3px;
 }
 
 
@@ -228,7 +229,7 @@ ul.list-articles li {
 }
 
 .post-image-comment {
-    margin-right: 70px;
+    margin-left: 50px;
     width: 100%;
     max-width: 800px;
     height: auto;
