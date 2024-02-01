@@ -49,13 +49,24 @@
         {% with img=post.uploadimage_set.first %}
             {% if img %}
                 <a href="{% url 'comments' post_id=post.id %}">
-                    <img class="you-post" src="{{ img.image.url }}" alt="Post Image">
+                    {% load cloudinary %}
+                    {% cloudinary img.image quality='auto' width=200 height=200 crop='pad' background='gen_fill:ignore-foreground_true' %}
+                </a>
+            {% endif %}
+        {% endwith %}
+
+        {% with video=post.uploadvideo_set.first %}
+            {% if video %}
+                <a href="{% url 'comments' post_id=post.id %}">
+                    {% load cloudinary %}
+                    <video width="200" height="200" controls>
+                        <source src="{{ video.video_file }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </a>
             {% endif %}
         {% endwith %}
     {% endfor %}
 </div>
 
-
 {% endblock %}
-
