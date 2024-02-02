@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from insta.forms import AddPostForm, CommentForm, PostUploadImageFormSet, PostUploadVideoFormSet
@@ -103,17 +105,22 @@ def add_comment(request, post_id):
 
 @login_required
 def like_post(request, post_id):
-    post = Post.objects.get(pk=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     user = request.user
 
-    existing_like = Like.objects.filter(user=user, post=post).first()
-
-    if existing_like:
+    try:
+        existing_like = Like.objects.get(user=user, post=post)
         existing_like.delete()
-    else:
+        liked = False
+    except ObjectDoesNotExist:
         Like.objects.create(user=user, post=post)
+        liked = True
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
-    return redirect('home')
+    likes_count = post.like_set.count()
+
+    return JsonResponse({'liked': liked, 'likes_count': likes_count})
 
 
 def posts_by_tag(request, tag):
