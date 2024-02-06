@@ -179,3 +179,11 @@ CLOUDINARY_STORAGE = {
 
 CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
+# try (test plagigram)
+# GOOGLE_OAUTH2_KEY = 16348572309-d5mcb6hr232t0pffujvlbrnd3b25pqmp.apps.googleusercontent.com
+# GOOGLE_OAUTH2_SECRET = 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
+
+# try 1
+#
+# GOOGLE_OAUTH2_KEY = 904190316005-bkmh71qcat91kaaov3sgrkff9slnpp3m.apps.googleusercontent.com
+# GOOGLE_OAUTH2_SECRET = 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

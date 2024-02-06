@@ -26,10 +26,11 @@
 
     <div class="row">
         <div class="col-md-8 mx-auto social-container my-2 order-md-1">
-            <button class="btn btn-primary mb-2">
-                <a href="{% url 'social:begin' 'google-oauth2' %}">Login With Google</a>
-            </button>
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary mb-2" style="text-decoration: none; color: #ffffff;">
+                Login With Google
+            </a>
         </div>
     </div>
+
 
 {% endblock %}
