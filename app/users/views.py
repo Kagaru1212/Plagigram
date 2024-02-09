@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
-from plagigram import settings
 from users.forms import LoginUserForm, RegisterUserForm, ProfileUserForm
 from users.models import User, Subscription
 
@@ -15,6 +14,19 @@ class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'users/login.html'
     extra_context = {"title": "Авторизация"}
+
+    def form_valid(self, form):
+        # Используйте кастомный бэкенд для аутентификации по email
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = authenticate(request=self.request, email=email, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+        else:
+            # Обработайте случай, когда аутентификация не удалась
+            return self.form_invalid(form)
 
 
 class RegisterUser(CreateView):
