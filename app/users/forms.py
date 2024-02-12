@@ -4,18 +4,18 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Login or E-mail',
-                               widget=forms.TextInput(attrs={'class': 'from-input'}))
+    email = forms.CharField(label='E-mail',
+                            widget=forms.TextInput(attrs={'class': 'from-input'}))
     password = forms.CharField(label='Password',
                                widget=forms.TextInput(attrs={'class': 'from-input'}))
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'password']
+        fields = ['email', 'password']
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label="Login", widget=forms.TextInput(attrs={'class': 'form-input'}))
+    email = forms.CharField(label="email", widget=forms.TextInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label="Reenter the password", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
@@ -28,6 +28,7 @@ class RegisterUserForm(UserCreationForm):
             'last_name': "Фамилия",
         }
         widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-input'}),
             'email': forms.TextInput(attrs={'class': 'form-input'}),
             'first_name': forms.TextInput(attrs={'class': 'form-input'}),
             'last_name': forms.TextInput(attrs={'class': 'form-input'}),
